@@ -1,74 +1,18 @@
-<%- include("partials/header") %>
-
-<main class="container">
-  <section class="card">
-    <h2>Create a New Blog Post</h2>
-
-    <form action="/posts" method="POST" class="blog-form">
-      <label for="creator">Creator Name</label>
-      <input type="text" id="creator" name="creator" placeholder="Enter your name" required>
-
-      <label for="title">Blog Title</label>
-      <input type="text" id="title" name="title" placeholder="Enter a title" required>
-
-      <label for="category">Category</label>
-      <select id="category" name="category" required>
-        <% categories.forEach((category) => { %>
-          <option value="<%= category %>"><%= category %></option>
-        <% }) %>
-      </select>
-
-      <label for="content">Blog Content</label>
-      <textarea id="content" name="content" rows="6" placeholder="Write your blog post here..." required></textarea>
-
-      <button type="submit" class="btn primary">Publish Post</button>
-    </form>
-  </section>
-
-  <section class="filter-row">
-    <h2>Blog Posts</h2>
-
-    <form action="/" method="GET" class="filter-form">
-      <label for="categoryFilter">Filter by Category</label>
-      <select id="categoryFilter" name="category" onchange="this.form.submit()">
-        <option value="All" <%= selectedCategory === "All" ? "selected" : "" %>>All</option>
-        <% categories.forEach((category) => { %>
-          <option value="<%= category %>" <%= selectedCategory === category ? "selected" : "" %>>
-            <%= category %>
-          </option>
-        <% }) %>
-      </select>
-    </form>
-  </section>
-
-  <% if (posts.length === 0) { %>
-    <div class="empty-state">
-      <p>No blog posts yet. Create one above to get started.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS-312 Blog App</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <h1>CS-312 Blog</h1>
+        <p>Create, view, edit, delete, and filter blog posts.</p>
+      </div>
+      <a class="home-link" href="/">Home</a>
     </div>
-  <% } %>
-
-  <section class="post-grid">
-    <% posts.forEach((post) => { %>
-      <article class="post-card">
-        <div class="post-meta">
-          <span class="category-badge"><%= post.category %></span>
-          <span><%= post.createdAt %></span>
-        </div>
-
-        <h3><%= post.title %></h3>
-        <p class="author">By <%= post.creator %></p>
-        <p class="post-content"><%= post.content %></p>
-
-        <div class="post-actions">
-          <a href="/posts/<%= post.id %>/edit" class="btn secondary">Edit</a>
-
-          <form action="/posts/<%= post.id %>/delete" method="POST">
-            <button type="submit" class="btn danger">Delete</button>
-          </form>
-        </div>
-      </article>
-    <% }) %>
-  </section>
-</main>
-
-<%- include("partials/footer") %>
+  </header>
